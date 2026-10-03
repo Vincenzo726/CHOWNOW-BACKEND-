@@ -83,5 +83,8 @@ router.patch(
     protect,
     verifyRiderPickupCode
 );
-
+router.get(
+    "/by-university/:universityId",
+    getPublicVendorsByUniversity
+);
 module.exports = router;
