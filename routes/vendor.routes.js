@@ -19,7 +19,8 @@ const {
      startPreparingOrder,
      markOrderReady,
      verifyPickupCode,
-     verifyRiderPickupCode
+     verifyRiderPickupCode,
+     getPublicVendorsByUniversity
 } = require("../controllers/vendor.controller");
 
 const router = express.Router();
