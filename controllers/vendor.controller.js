@@ -9,6 +9,44 @@ const { createAccount } = require("./auth.controller");
 const upload = require("../middleware/upload");
 const Order = require("../models/order");
 
+
+// =========================
+// GET PUBLIC VENDORS BY UNIVERSITY
+// =========================
+
+const getPublicVendorsByUniversity = async (req, res) => {
+    try {
+        const { universityId } = req.params;
+
+        const vendors = await Vendor.find({
+            universityId,
+            isActive: true,
+            isVerified: true
+        })
+            .select(
+                "_id businessName businessAddress location description logo rating totalRatings isOpen isVerified universityId"
+            )
+            .populate("universityId", "name code")
+            .sort({ businessName: 1 });
+
+        return res.status(200).json({
+            success: true,
+            vendors
+        });
+
+    } catch (error) {
+        console.error(
+            "Get public vendors by university error:",
+            error.message
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong"
+        });
+    }
+};
+
 // =========================
 // VENDOR REGISTRATION
 // =========================
@@ -234,7 +272,7 @@ const updateVendorProfile = async (req, res) => {
 // =========================
 // CREATE FOOD
 // =========================
-
+  
 const createFood = async (req, res) => {
     try {
         const foodSchema = z.object({
@@ -1012,5 +1050,6 @@ module.exports = {
     startPreparingOrder,
     markOrderReady,
     verifyPickupCode,
-    verifyRiderPickupCode
+    verifyRiderPickupCode,
+    getPublicVendorsByUniversity
 };
