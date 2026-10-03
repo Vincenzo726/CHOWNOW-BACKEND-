@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const bimpe = require("./BimpeAI/bimpeai");
 
 const authRoutes = require("./routes/auth.routes");
 const protect = require("./middleware/auth");
